@@ -293,8 +293,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const parallaxElements = document.querySelectorAll('.hero-image');
         
         parallaxElements.forEach(element => {
-            const speed = 0.5;
-            element.style.transform = `translateY(${scrolled * speed}px)`;
+            const speed = 0.2; // Reducido de 0.5 a 0.2 para menos movimiento
+            const maxOffset = 100; // Límite máximo de desplazamiento en píxeles
+            const offset = Math.min(scrolled * speed, maxOffset);
+            element.style.transform = `translateY(${offset}px)`;
         });
     });
 
