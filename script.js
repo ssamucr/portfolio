@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         updateThemeIcon(theme);
+        updateNavbarTheme(theme); // Actualizar navbar inmediatamente
         localStorage.setItem('theme', theme);
     }
 
@@ -51,6 +52,27 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             themeToggle.style.transform = '';
         }, 300);
+    }
+
+    function updateNavbarTheme(theme) {
+        const navbar = document.querySelector('.navbar');
+        const scrollY = window.scrollY;
+        
+        if (scrollY > 50) {
+            if (theme === 'dark') {
+                navbar.style.background = 'rgba(15, 23, 42, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            }
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            if (theme === 'dark') {
+                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+            navbar.style.boxShadow = 'none';
+        }
     }
 
     function updateThemeIcon(theme) {
@@ -127,24 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Agregar clase a navbar en scroll
     function handleNavbarScroll() {
-        const navbar = document.querySelector('.navbar');
         const currentTheme = document.documentElement.getAttribute('data-theme');
-        
-        if (window.scrollY > 50) {
-            if (currentTheme === 'dark') {
-                navbar.style.background = 'rgba(15, 23, 42, 0.98)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            }
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            if (currentTheme === 'dark') {
-                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-            navbar.style.boxShadow = 'none';
-        }
+        updateNavbarTheme(currentTheme);
     }
 
     // Event listeners para scroll
@@ -279,6 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar
     initAnimations();
     highlightActiveLink();
+    handleNavbarScroll(); // Inicializar navbar con el tema correcto
 
     // Efecto parallax sutil para el hero
     window.addEventListener('scroll', function() {
