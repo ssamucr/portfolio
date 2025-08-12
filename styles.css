@@ -8,8 +8,9 @@
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    color: #2d3748;
-    background: #ffffff;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Variables CSS */
@@ -28,6 +29,24 @@ body {
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Variables para modo oscuro */
+[data-theme="dark"] {
+    --primary-color: #3b82f6;
+    --secondary-color: #94a3b8;
+    --accent-color: #60a5fa;
+    --gradient-start: #60a5fa;
+    --gradient-end: #3b82f6;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --border-color: #334155;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
 }
 
 /* Utilidades */
@@ -54,6 +73,15 @@ body {
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     transition: all 0.3s ease;
+}
+
+/* Navbar en modo oscuro */
+[data-theme="dark"] .navbar {
+    background: rgba(15, 23, 42, 0.95);
+}
+
+[data-theme="dark"] .nav-menu {
+    background-color: var(--bg-primary);
 }
 
 .nav-container {
@@ -123,6 +151,43 @@ body {
     transition: 0.3s;
 }
 
+/* Botón toggle para modo oscuro */
+.theme-toggle {
+    background: none;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    margin-left: 1rem;
+}
+
+.theme-toggle:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-secondary);
+    transform: rotate(180deg);
+}
+
+.theme-toggle i {
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+/* Animación del icono del tema */
+[data-theme="dark"] .theme-toggle i::before {
+    content: "\f185"; /* sun icon */
+}
+
+/* Transición suave para cambio de tema */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
 /* Sección Hero */
 .hero {
     min-height: 100vh;
@@ -130,6 +195,19 @@ body {
     align-items: center;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     padding-top: 70px;
+}
+
+/* Hero en modo oscuro */
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+[data-theme="dark"] .profile-card {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .profile-placeholder {
+    background: linear-gradient(135deg, #334155, #475569);
 }
 
 .hero-container {
@@ -272,6 +350,22 @@ section {
     background: var(--bg-secondary);
 }
 
+/* Sobre mí en modo oscuro */
+[data-theme="dark"] .about {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .tag {
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+[data-theme="dark"] .tag:hover {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+}
+
 .about-content {
     max-width: 800px;
     margin: 0 auto;
@@ -322,6 +416,20 @@ section {
     max-width: 800px;
     margin: 0 auto;
     position: relative;
+}
+
+/* Experiencia en modo oscuro */
+[data-theme="dark"] .timeline-content {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .timeline-content::before {
+    border-right-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .skill-tag {
+    background: var(--bg-primary);
+    color: var(--text-secondary);
 }
 
 .timeline::before {
@@ -415,6 +523,20 @@ section {
     background: var(--bg-secondary);
 }
 
+/* Tecnologías en modo oscuro */
+[data-theme="dark"] .technologies {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .tech-category {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .tech-item:hover {
+    background: var(--bg-primary);
+}
+
 .tech-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -479,6 +601,25 @@ section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
+}
+
+/* Proyectos en modo oscuro */
+[data-theme="dark"] .project-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .project-image {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .project-card:hover .project-image {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .tech-tag {
+    background: var(--bg-primary);
+    color: var(--primary-color);
 }
 
 .project-card {
@@ -564,6 +705,33 @@ section {
     background: var(--bg-secondary);
 }
 
+/* Contacto en modo oscuro */
+[data-theme="dark"] .contact {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .contact-form {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group textarea:focus {
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .form-group input::placeholder,
+[data-theme="dark"] .form-group textarea::placeholder {
+    color: var(--text-secondary);
+}
+
 .contact-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -644,6 +812,13 @@ section {
     padding: 2rem 0;
 }
 
+/* Footer en modo oscuro */
+[data-theme="dark"] .footer {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-top: 1px solid var(--border-color);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
@@ -655,7 +830,7 @@ section {
         left: -100%;
         top: 70px;
         flex-direction: column;
-        background-color: white;
+        background-color: var(--bg-primary);
         width: 100%;
         text-align: center;
         transition: 0.3s;
@@ -665,6 +840,11 @@ section {
 
     .nav-menu.active {
         left: 0;
+    }
+
+    .theme-toggle {
+        margin-left: 0;
+        margin-top: 1rem;
     }
 
     .hero-container {

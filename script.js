@@ -3,6 +3,72 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    // Inicializar tema basado en preferencia del sistema
+    initTheme();
+
+    // Toggle del menú móvil
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    // Toggle del tema
+    themeToggle.addEventListener('click', function() {
+        toggleTheme();
+    });
+
+    function initTheme() {
+        // Verificar si hay una preferencia guardada
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme) {
+            // Usar tema guardado
+            setTheme(savedTheme);
+        } else {
+            // Usar preferencia del sistema
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const systemTheme = systemPrefersDark ? 'dark' : 'light';
+            setTheme(systemTheme);
+        }
+    }
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        updateThemeIcon(theme);
+        localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+        
+        // Animación del botón
+        themeToggle.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+            themeToggle.style.transform = '';
+        }, 300);
+    }
+
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+        }
+    }
+
+    // Escuchar cambios en preferencias del sistema
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        // Solo actualizar si no hay preferencia guardada manualmente
+        if (!localStorage.getItem('theme')) {
+            const systemTheme = e.matches ? 'dark' : 'light';
+            setTheme(systemTheme);
+        }
+    });
 
     // Toggle del menú móvil
     hamburger.addEventListener('click', function() {
@@ -62,11 +128,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Agregar clase a navbar en scroll
     function handleNavbarScroll() {
         const navbar = document.querySelector('.navbar');
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        
         if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            if (currentTheme === 'dark') {
+                navbar.style.background = 'rgba(15, 23, 42, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            }
             navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            if (currentTheme === 'dark') {
+                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
             navbar.style.boxShadow = 'none';
         }
     }
@@ -220,12 +296,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('loaded');
     });
 
-    // Theme toggle (para modo oscuro futuro)
-    function initThemeToggle() {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    }
-
     // Lazy loading para imágenes (cuando agregues imágenes reales)
     function lazyLoadImages() {
         const images = document.querySelectorAll('img[data-src]');
@@ -245,7 +315,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Inicializar funciones adicionales
-    initThemeToggle();
     lazyLoadImages();
 });
 
